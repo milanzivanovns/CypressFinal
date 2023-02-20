@@ -38,7 +38,7 @@ describe("Create Gallerie page test", () => {
         // });
 
         // ** Login preko custom funkcije koju smo mi napravili u commands.js file-u
-          cy.loginViaBackend(credetials.email, createGalleriePage.password);
+          cy.loginViaBackend();
       });
     
       it("Create gallery", () => {
