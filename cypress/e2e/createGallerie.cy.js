@@ -42,6 +42,11 @@ describe("Create Gallerie page test", () => {
       });
     
       it("Create gallery", () => {
+        cy.intercept({
+          method: "POST",
+          url: "https://gallery-api.vivifyideas.com/api/galleries"
+        }).as("galleryCreation");
+      
         //Visit smo stavili ovde sada jer gore code za request se odradi mi se ulogujemo ali nista "ne posecujemo"
         cy.visit("/create");
         createGalleriePage.createGalleryLink.click();

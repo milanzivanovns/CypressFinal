@@ -21,8 +21,20 @@ describe("Login page test", () => {
         loginPage.loginPageHeading.should("have.text", "Please login")
     });
 
-    it("Invalid Login", () => {
+    it.only("Invalid Login", () => {
+        cy.intercept({
+            method: "POST",
+            url: "https://gallery-api.vivifyideas.com/api/auth/login"
+        }).as("unsuccesfulLogin");
+
         loginPage.login(credetials.invalidEmail, credetials.invalidPassword);
+
+        cy.wait("@unsuccesfulLogin").then((interception) => {
+            console.log("INTERCEPTION", interception);
+            expect(interception.response.statusCode).eq(401);
+            expect(interception.response.statusMessage).to.eq("Unauthorized");
+        });
+
         cy.url().should("include", "/login")
         loginPage.errorMessage.should("be.visible")
         .and("have.text", "Bad Credentials")
@@ -30,8 +42,19 @@ describe("Login page test", () => {
         .and("have.class", "alert-danger")
     });
 
-    it.only("Valid login", () => {
+    it("Valid login", () => {
+        //Interesptori sluze nam za prvenstveno za cekanje nekog zahteva, recimo da cekamo da se ucita neka stranica
+        cy.intercept({
+            method: "POST",
+            url: "https://gallery-api.vivifyideas.com/api/auth/login"
+        }).as("succesfulLogin");
+
         loginPage.login(credetials.email, credetials.password);
+        cy.wait("@succesfulLogin").then((interception) => {
+            console.log("INTERCEPTION", interception);
+            expect(interception.response.statusCode).eq(200);
+        });
+
         cy.url().should("not.include", "/login");
     })
 });
