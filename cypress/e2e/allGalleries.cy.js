@@ -7,10 +7,7 @@ import { faker } from '@faker-js/faker';
 const credetials = {
     email: "vivifytest@gmail.com",
     password: "12345678",
-
-    invalidEmail: faker.internet.email(),
-    invalidPassword: faker.lorem.word()
-}
+};
 
 describe("All Galleries test", () => {
 
@@ -56,4 +53,4 @@ describe("All Galleries test", () => {
     allGalleriesPage.singleGallery.find("a").eq(1).click();
   });
 
-})
+});

@@ -9,7 +9,7 @@ const credetials = {
 
     invalidEmail: faker.internet.email(),
     invalidPassword: faker.lorem.word()
-}
+};
 
 
 describe("Login page test", () => {
@@ -19,7 +19,7 @@ describe("Login page test", () => {
         cy.url().should("include","/login");
         loginPage.loginPageHeading.should("be.visible");
         loginPage.loginPageHeading.should("have.text", "Please login")
-    })
+    });
 
     it("Invalid Login", () => {
         loginPage.login(credetials.invalidEmail, credetials.invalidPassword);
