@@ -24,18 +24,21 @@ describe("Create Gallerie page test", () => {
         // cy.url().should("not.include", "/login");
 
         // ** Login preko pisanja coda za Request:
-        cy.request({
-          method: "POST",
-          url: "https://gallery-api.vivifyideas.com/api/auth/login",
-          body: {
-            email: credetials.email,
-            password: credetials.password
-          }
-        })
-        .its("body")
-        .then((response) => {
-          window.localStorage.setItem("token", response.access_token);
-        });
+        // cy.request({
+        //   method: "POST",
+        //   url: "https://gallery-api.vivifyideas.com/api/auth/login",
+        //   body: {
+        //     email: credetials.email,
+        //     password: credetials.password
+        //   }
+        // })
+        // .its("body")
+        // .then((response) => {
+        //   window.localStorage.setItem("token", response.access_token);
+        // });
+
+        // ** Login preko custom funkcije koju smo mi napravili u commands.js file-u
+          cy.loginViaBackend(credetials.email, createGalleriePage.password);
       });
     
       it("Create gallery", () => {

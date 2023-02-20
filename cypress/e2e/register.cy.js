@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 
 import { registerPage } from "../../page_objects/registerPOM";
+import { loginPage } from "../../page_objects/loginPOM";
 import { faker } from "@faker-js/faker";
 
 const credetials = {
@@ -25,5 +26,11 @@ describe("Register page test", () => {
             credetials.email, 
             credetials.password, 
             credetials.password);
+    });
+
+    it.only("Register through backend", () => {
+        cy.registerUserViaBackend(credetials.email, credetials.firstName, credetials.lastName, credetials.password)
+        cy.visit("/login");
+        loginPage.login( credetials.email, credetials.password);
     });
 });
