@@ -18,13 +18,29 @@ let galleryData = {
 
 describe("Create Gallerie page test", () => {
 
-    before("visit app and log in", () => {
-        cy.visit("/login");
-        loginPage.login(credetials.email, credetials.password);
-        cy.url().should("not.include", "/login");
+    before("Visit app and log in", () => {
+        // cy.visit("/login");
+        // loginPage.login(credetials.email, credetials.password);
+        // cy.url().should("not.include", "/login");
+
+        // ** Login preko pisanja coda za Request:
+        cy.request({
+          method: "POST",
+          url: "https://gallery-api.vivifyideas.com/api/auth/login",
+          body: {
+            email: credetials.email,
+            password: credetials.password
+          }
+        })
+        .its("body")
+        .then((response) => {
+          window.localStorage.setItem("token", response.access_token);
+        });
       });
     
-      it("create gallery", () => {
+      it("Create gallery", () => {
+        //Visit smo stavili ovde sada jer gore code za request se odradi mi se ulogujemo ali nista "ne posecujemo"
+        cy.visit("/create");
         createGalleriePage.createGalleryLink.click();
         createGalleriePage.createGalleryHeading
           .should("be.visible")
